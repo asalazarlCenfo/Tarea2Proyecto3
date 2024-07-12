@@ -1,0 +1,59 @@
+<div>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Category</th>
+            <th *ngIf="isSuperAdmin" scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="itemList && itemList.length > 0; else noItemsTemplate">
+            <tr *ngFor="let item of itemList; let i = index">
+              <th scope="row">{{ item.id }}</th>
+              <td>{{ item.name }}</td>
+              <td>{{ item.description }}</td>
+              <td>{{ item.price }}</td>
+              <td>{{ item.stock }}</td>
+              <td>{{ item.category?.name }}</td>
+              <td>
+                <button 
+                  *ngIf="isSuperAdmin"
+                  type="button" 
+                  class="btn btn-secondary me-3"
+                  (click)="showDetailModal(item, detailModal)">
+                  <i class="fa-solid fa-eye white"></i>
+                </button>
+                <button 
+                  *ngIf="isSuperAdmin"
+                  type="button"
+                  class="btn btn-danger"
+                  (click)="deleteProduct(item)">
+                  <i class="fa-solid fa-trash white"></i>
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-template #noItemsTemplate>
+            <tr>
+              <td colspan="7" class="text-center">There are no items to show</td>
+            </tr>
+          </ng-template>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <app-modal #detailModal>
+    <app-product-form
+      [product]="selectedItem"
+      [action]="'Update product'"
+      (callParentEvent)="handleFormAction($event)">
+    </app-product-form>
+  </app-modal>
+  
