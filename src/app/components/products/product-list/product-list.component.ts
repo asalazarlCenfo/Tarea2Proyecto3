@@ -16,10 +16,11 @@ import { ProductFormComponent } from '../product-form/product-form.component';
     ProductFormComponent
   ],
   templateUrl: './product-list.component.html',
-  styleUrl: './product-list.component.scss'
+  styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent implements OnChanges {
   @Input() itemList: IProduct[] = [];
+  @Input() areActionsAvailable: boolean = false; 
   public selectedItem: IProduct = {};
 
   constructor(
